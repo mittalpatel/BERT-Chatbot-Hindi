@@ -1,0 +1,288 @@
+<!-- # ==============================================================================
+# title              : home.html
+# author             : Pragnakalp Techlabs
+# email              : letstalk@pragnakalp.com
+# website            : https://www.pragnakalp.com
+# ============================================================================== -->
+
+<!DOCTYPE html>
+<html>
+<title>Closed Domain Chatbot Demo Using BERT By Pragnakalp Techlabs </title>
+
+<head>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <link rel="icon" type="image/png" sizes="96x96" href="{{ url_for('static', filename = 'favicon-96x96.png') }}">
+  <style>
+    body {
+      font-family: monospace;
+    }
+
+    h2 {
+      color: #4c4961;
+      display: inline-block;
+      margin: 0;
+      padding: 14px;
+    }
+
+    h3 {
+      color: black;
+      font-size: 20px;
+      margin-top: 3px;
+      text-align: center;
+    }
+
+    #chatbox {
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 10px;
+    }
+
+    #myDropdown {
+      text-align: center;
+      width: 90%;
+      margin-right: auto;
+      color: Black;
+      font-family: monospace;
+      font-size: 24px;
+    }
+
+    #myDropdown select {
+      margin-top: 10px;
+      color: white;
+      font-family: monospace;
+      font-size: 20px;
+      background: #337ab7;
+    }
+
+    #mychatbox {
+      margin-left: auto;
+      margin-right: auto;
+      width: 90%;
+      height: 200px;
+      overflow-y: scroll;
+      border: 1px solid;
+    }
+
+    #userInput {
+      margin-left: auto;
+      margin-right: auto;
+      width: 40%;
+      margin-top: 10px;
+      padding-bottom: 20px;
+    }
+
+    #textInput {
+      width: 90%;
+      border: none;
+      border-bottom: 3px solid black;
+      font-family: monospace;
+      font-size: 17px;
+    }
+
+    .userText {
+      color: white;
+      font-family: monospace;
+      font-size: 17px;
+      text-align: right;
+      line-height: 30px;
+    }
+
+    .userText span {
+      background-color: #808080;
+      padding: 10px;
+      border-radius: 2px;
+    }
+
+    .botText {
+      color: white;
+      font-family: monospace;
+      font-size: 17px;
+      text-align: left;
+      line-height: 30px;
+      width: 100%;
+    }
+
+    .botText1 {
+      font-family: monospace;
+      padding: 10px;
+      font-size: 17px;
+      color: darkblue;
+      border-radius: 2px;
+      width: 100%;
+    }
+
+    .botText span {
+      background-color: #4169e1;
+      font-family: monospace;
+      padding: 10px;
+      border-radius: 2px;
+      width: 100%;
+    }
+
+    /* Style The Dropdown Button */
+    .dropbtn {
+      background-color: rgb(12, 87, 226);
+      color: white;
+      padding: 5px;
+      font-size: 16px;
+      border: none;
+      cursor: pointer;
+    }
+
+    /* The container <div> - needed to position the dropdown content */
+    .dropdown {
+      width: 100%;
+      display: block;
+      text-align: center;
+
+    }
+
+    /* Dropdown Content -Hidden by Default */
+    .dropdown-content {
+      display: none;
+      /* position: absolute; */
+      background-color: #f9f9f9;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+      z-index: 1;
+    }
+
+    /* Links inside the dropdown */
+    .dropdown-content a {
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+    }
+
+    /* Change color of dropdown links on hover */
+    .dropdown-content a:hover {
+      background-color: #f1f1f1
+    }
+
+    /* Show the dropdown menu on hover */
+    .dropdown .dropdown-content {
+      display: hidden;
+    }
+
+    /* Change the background color of the dropdown button when the dropdown content is shown */
+    .dropdown:hover .dropbtn {
+      background-color: rgb(12, 87, 226);
+    }
+
+    #tidbit {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 300px;
+    }
+
+    .boxed {
+      margin-left: auto;
+      margin-right: auto;
+      /* width: 78%; */
+      margin-top: 60px;
+      /* border: 1px solid green; */
+    }
+
+    .box {
+      border: 2px solid black;
+      margin-top: 1%;
+      margin-bottom: -3%;
+    }
+
+    .dropdown .dropdown-content {
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <img />
+  <center>
+    <h2>
+      <span> Closed Domain Question Answering/Chatbot Demo using BERT NLP </span>
+    </h2>
+  </center>
+
+  <div class="container">
+    <div class="row">
+      <p style="color:black; text-align: center; font-size: 16px;">Case study of <a
+          href="https://www.pragnakalp.com/case-study/chatbot-using-bert-in-python/">BERT based Chatbot using Python.</a>
+        Developed By
+        <a href="https://www.pragnakalp.com/"> Pragnakalp Techlabs</a>.
+      </p>
+      <p style="color:rgb(156, 6, 14); text-align: center; font-size: 14px; width:94%; margin-left:3%;">This is a closed domain
+        chatbot. You can ask question related to the paragraph given below.<br> It won't work for general questions or
+        greetings like hi, hello, how are you?</p>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="box"></div>
+        <div class="boxed">
+          <div>
+
+            <div id="chatbox">
+              <p class="botText1">
+                <span id="textPara" name="para"> भारत (आधिकारिक नाम: भारत गणराज्य, अंग्रेज़ी: Republic of India) दक्षिण एशिया में स्थित भारतीय उपमहाद्वीप का सबसे बड़ा देश है। पूर्ण रूप से उत्तरी गोलार्ध में स्थित भारत, भौगोलिक दृष्टि से विश्व में छठा सबसे बड़ा और जनसंख्या के दृष्टिकोण से दूसरा सबसे बड़ा देश है। भारत के पश्चिम में पाकिस्तान, उत्तर-पूर्व में चीन, नेपाल और भूटान, पूर्व में बांग्लादेश और म्यान्मार स्थित हैं। हिन्द महासागर में इसके दक्षिण पश्चिम में मालदीव, दक्षिण में श्रीलंका और दक्षिण-पूर्व में इंडोनेशिया से भारत की सामुद्रिक सीमा लगती है। इसके उत्तर की भौतिक सीमा हिमालय पर्वत से और दक्षिण में हिन्द महासागर से लगी हुई है। पूर्व में बंगाल की खाड़ी है तथा पश्चिम में अरब सागर हैं। प्राचीन सिन्धु घाटी सभ्यता, व्यापार मार्गों और बड़े-बड़े साम्राज्यों का विकास-स्थान रहे भारतीय उपमहाद्वीप को इसके सांस्कृतिक और आर्थिक सफलता के लंबे इतिहास के लिये जाना जाता रहा है। चार प्रमुख संप्रदायों: हिंदू, बौद्ध, जैन और सिख धर्मों का यहां उदय हुआ।</span>
+              </p>
+            </div>
+
+            <div id="mychatbox">
+            </div>
+
+            <div id="userInput">
+              <input id="textInput" type="text" name="msg" placeholder="Ask Question" value="भारतका आधिकारिक नाम क्या है?" />
+            </div>
+
+          </div>
+          <script>
+            function getBotResponse() {
+              var rawText = $("#textInput").val();
+              var para = $("#textPara").html();
+              var userHtml = '<p class="userText"><span>' + rawText + "</span></p>";
+              $("#textInput").val("");
+              $("#mychatbox").append(userHtml);
+              document
+                .getElementById("userInput")
+                .scrollIntoView({ block: "start", behavior: "smooth" });
+              $.get("/predict", { msg: rawText}).done(function (data) {
+                var botHtml = '<p class="botText"><span>' + data + "</span></p>";
+                $("#mychatbox").append(botHtml);
+                $("#textInput").prop('disabled', false);
+
+                count = $("#mychatbox").find('.botText').length;
+                $("#mychatbox").scrollTop(count * 100);
+                document
+                  .getElementById("userInput")
+                  .scrollIntoView({ block: "start", behavior: "smooth" });
+                $("#textInput").focus();
+              });
+
+            }
+            $("#textInput").keypress(function (e) {
+              if (e.which == 13) {
+                var rawText = $("#textInput").val();
+                if (rawText.trim() != '') {
+                  $("#textInput").prop('disabled', true);
+                  getBotResponse();
+                  $("#textInput").focus();
+
+                } else {
+                  alert("Please ask the question");
+                  $("#textInput").focus()
+                }
+
+              }
+            });
+          </script>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
